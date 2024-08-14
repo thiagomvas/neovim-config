@@ -381,6 +381,20 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
+-- Copy selected text to clipboard
+vim.keymap.set('v', '<leader>y', '"+y', { desc = 'Copy selected text to system clipboard' })
+vim.keymap.set('n', '<leader>Y', '"+yg_', { desc = 'Copy text to end of line to system clipboard' })
+vim.keymap.set('n', '<leader>y', '"+y', { desc = 'Copy text to system clipboard' })
+vim.keymap.set('n', '<leader>yy', '"+yy', { desc = 'Copy current line to system clipboard' })
+
+-- Paste from clipboard
+vim.keymap.set('n', '<leader>p', '"+p', { desc = 'Paste from system clipboard after cursor' })
+vim.keymap.set('n', '<leader>P', '"+P', { desc = 'Paste from system clipboard before cursor' })
+vim.keymap.set('v', '<leader>p', '"+p', { desc = 'Paste from system clipboard replacing selected text' })
+vim.keymap.set('v', '<leader>P', '"+P', { desc = 'Paste from system clipboard before selected text' })
+
+
+
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
         -- You can pass additional configuration to Telescope to change the theme, layout, etc.
