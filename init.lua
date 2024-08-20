@@ -96,7 +96,6 @@ vim.g.have_nerd_font = false
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 
-
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
@@ -260,6 +259,28 @@ require('lazy').setup({
     },
   },
 
+  -- Discord Rich Presence plugin
+  {
+    'andweeb/presence.nvim',
+    config = function()
+      require('presence'):setup {
+        -- Configuration options can be added here
+        neovim_image_text = 'Editing with Neovim',
+        main_image = 'neovim',
+        auto_update = true,
+        -- Rich Presence text options
+        editing_text = 'Editing %s', -- Format string rendered when an editable file is loaded in the buffer (either string or function(filename: string): string)
+        file_explorer_text = 'Browsing %s', -- Format string rendered when browsing a file explorer (either string or function(file_explorer_name: string): string)
+        git_commit_text = 'Committing changes', -- Format string rendered when committing changes in git (either string or function(filename: string): string)
+        plugin_manager_text = 'Managing plugins', -- Format string rendered when managing plugins (either string or function(plugin_manager_name: string): string)
+        reading_text = 'Reading %s', -- Format string rendered when a read-only or unmodifiable file is loaded in the buffer (either string or function(filename: string): string)
+        workspace_text = 'Working on %s', -- Format string rendered when in a git repository (either string or function(project_name: string|nil, filename: string): string)
+        line_number_text = 'Line %s out of %s', -- Format string rendered when `enable_line_number` is set to true (either string or function(line_number: number, line_count: number): string)
+        -- More options can be configured as per your preference
+      }
+    end,
+  },
+
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
@@ -381,20 +402,25 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
--- Copy selected text to clipboard
-vim.keymap.set('v', '<leader>y', '"+y', { desc = 'Copy selected text to system clipboard' })
-vim.keymap.set('n', '<leader>Y', '"+yg_', { desc = 'Copy text to end of line to system clipboard' })
-vim.keymap.set('n', '<leader>y', '"+y', { desc = 'Copy text to system clipboard' })
-vim.keymap.set('n', '<leader>yy', '"+yy', { desc = 'Copy current line to system clipboard' })
+      -- Copy selected text to clipboard
+      vim.keymap.set('v', '<leader>y', '"+y', { desc = 'Copy selected text to system clipboard' })
+      vim.keymap.set('n', '<leader>Y', '"+yg_', { desc = 'Copy text to end of line to system clipboard' })
+      vim.keymap.set('n', '<leader>y', '"+y', { desc = 'Copy text to system clipboard' })
+      vim.keymap.set('n', '<leader>yy', '"+yy', { desc = 'Copy current line to system clipboard' })
 
--- Paste from clipboard
-vim.keymap.set('n', '<leader>p', '"+p', { desc = 'Paste from system clipboard after cursor' })
-vim.keymap.set('n', '<leader>P', '"+P', { desc = 'Paste from system clipboard before cursor' })
-vim.keymap.set('v', '<leader>p', '"+p', { desc = 'Paste from system clipboard replacing selected text' })
-vim.keymap.set('v', '<leader>P', '"+P', { desc = 'Paste from system clipboard before selected text' })
+      -- Paste from clipboard
+      vim.keymap.set('n', '<leader>p', '"+p', { desc = 'Paste from system clipboard after cursor' })
+      vim.keymap.set('n', '<leader>P', '"+P', { desc = 'Paste from system clipboard before cursor' })
+      vim.keymap.set('v', '<leader>p', '"+p', { desc = 'Paste from system clipboard replacing selected text' })
+      vim.keymap.set('v', '<leader>P', '"+P', { desc = 'Paste from system clipboard before selected text' })
 
-
-
+      -- Keymap to toggle Git blame with gitsigns
+      vim.api.nvim_set_keymap(
+        'n',
+        '<leader>gb',
+        ':lua require"gitsigns".toggle_current_line_blame()<CR>',
+        { desc = 'Toggle [G]it [B]lame for current file', noremap = true, silent = true }
+      )
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
         -- You can pass additional configuration to Telescope to change the theme, layout, etc.
