@@ -266,7 +266,7 @@ require('lazy').setup({
       require('presence'):setup {
         -- Configuration options can be added here
         neovim_image_text = 'Editing with Neovim',
-        main_image = 'neovim',
+        main_image = 'file',
         auto_update = true,
         -- Rich Presence text options
         editing_text = 'Editing %s', -- Format string rendered when an editable file is loaded in the buffer (either string or function(filename: string): string)
