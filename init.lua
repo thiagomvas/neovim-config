@@ -414,6 +414,14 @@ require('lazy').setup({
       vim.keymap.set('v', '<leader>p', '"+p', { desc = 'Paste from system clipboard replacing selected text' })
       vim.keymap.set('v', '<leader>P', '"+P', { desc = 'Paste from system clipboard before selected text' })
 
+      -- Toggle between absolute and relative line numbers with <leader>ln
+      vim.api.nvim_set_keymap(
+        'n',
+        '<leader>ln',
+        ':set invnumber invrelativenumber<CR>',
+        { desc = 'Switch [L]ine [N]umbers (absolute or relative)', noremap = true, silent = true }
+      )
+
       -- Keymap to toggle Git blame with gitsigns
       vim.api.nvim_set_keymap(
         'n',
@@ -477,6 +485,23 @@ require('lazy').setup({
       'hrsh7th/cmp-nvim-lsp',
     },
     config = function()
+      -- In your LSP setup function
+      require('lspconfig').clangd.setup {
+        -- You can add additional configurations here if needed
+        settings = {
+          clangd = {
+            -- Ensure clangd is aware of the formatting settings
+            format = {
+              style = {
+                BasedOnStyle = 'Google',
+                IndentWidth = 4,
+                TabWidth = 4,
+                UseTab = 'Never',
+              },
+            },
+          },
+        },
+      }
       -- Brief aside: **What is LSP?**
       --
       -- LSP is an initialism you've probably heard, but might not understand what it is.
