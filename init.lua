@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
@@ -258,7 +258,35 @@ require('lazy').setup({
       },
     },
   },
-
+  {
+    'akinsho/toggleterm.nvim',
+    version = '*',
+    config = function()
+      require('toggleterm').setup {
+        size = 20,
+        open_mapping = [[<c-\>]],
+        hide_numbers = true, -- Hide the number column in terminal buffers
+        shade_filetypes = {},
+        shade_terminals = true,
+        shading_factor = 2, -- the degree by which to darken to terminal color, default: 1
+        start_in_insert = true,
+        insert_mappings = true, -- whether or not the open mapping applies in insert mode
+        terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
+        persist_size = true,
+        direction = 'float', -- Set the terminal orientation to 'float'
+        close_on_exit = true, -- close the terminal window when the process exits
+        shell = vim.o.shell, -- change the default shell
+        float_opts = {
+          border = 'curved', -- Border style: single/double/shadow/curved
+          winblend = 3,
+          highlights = {
+            border = 'Normal',
+            background = 'Normal',
+          },
+        },
+      }
+    end,
+  },
   -- Discord Rich Presence plugin
   {
     'andweeb/presence.nvim',
